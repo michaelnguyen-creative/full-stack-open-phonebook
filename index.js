@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import morgan from 'morgan'
-import cors from "cors";
+import cors from 'cors'
 import Person from './models/person.js'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -9,17 +9,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express()
-app.use(express.json())
-app.use(cors());
-
 morgan.token('persons', (req) => JSON.stringify(req.body))
 
-
-app.use(
-  morgan(':method :url :status :res[content-length] :response-time ms :persons'),
-)
-
 app.use(express.static('build'))
+app.use(express.json())
+app.use(cors())
+app.use(
+  morgan(':method :url :status :res[content-length] :response-time ms :persons')
+)
 
 app.get('/', (req, res) => {
   res.send('<h1>Phonebook Backend</h1>')
@@ -79,7 +76,7 @@ app.put('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndUpdate(
     req.params.id,
     { name, number },
-    { new: true, runValidators: true, context: 'query' },
+    { new: true, runValidators: true, context: 'query' }
   )
     .then((updatedPerson) => res.json(updatedPerson))
     .catch((err) => next(err))
@@ -96,7 +93,8 @@ const errorHandler = (err, req, res, next) => {
 
   if (err.name === 'CastError') {
     return res.status(400).send({ error: 'malformatted id' })
-  } if (err.name === 'ValidationError') {
+  }
+  if (err.name === 'ValidationError') {
     return res.status(400).json({ error: err.message })
   }
 
