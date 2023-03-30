@@ -15,7 +15,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
 app.use(
-  morgan(':method :url :status :res[content-length] :response-time ms :persons')
+  morgan(':method :url :status :res[content-length] :response-time ms :persons'),
 )
 
 app.get('/', (req, res) => {
@@ -76,7 +76,7 @@ app.put('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndUpdate(
     req.params.id,
     { name, number },
-    { new: true, runValidators: true, context: 'query' }
+    { new: true, runValidators: true, context: 'query' },
   )
     .then((updatedPerson) => res.json(updatedPerson))
     .catch((err) => next(err))
