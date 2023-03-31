@@ -1,4 +1,4 @@
-export function Notification({ status }) {
+const Notification = ({ status }) => {
   if (status === '') {
     return null
   }
@@ -18,6 +18,10 @@ export function Notification({ status }) {
   }
 
   return (
-    <div style={status.includes('Added') ? styleSuccess : styleError}>{status}</div>
+    <div style={status.includes('Added') ? styleSuccess : styleError}>
+      {status}
+    </div>
   )
 }
+
+export default Notification
