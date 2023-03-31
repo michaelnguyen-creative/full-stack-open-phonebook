@@ -1,15 +1,14 @@
-export function Contact({ persons, deleteContact }) {
-  return (
-    <>
-      {persons.map((person) => (
-        <div key={person.id}>
-          {person.name}
-          {' '}
-          {person.phone}
-          {' '}
-          <button id={person.id} onClick={deleteContact}>delete</button>
-        </div>
-      ))}
-    </>
-  )
-}
+const Contact = ({ persons, deleteContact }) => (
+  <>
+    {persons.map((person) => (
+      <div key={person.id}>
+        {person.name} {person.phone}{' '}
+        <button id={person.id} type="button" onClick={deleteContact}>
+          delete
+        </button>
+      </div>
+    ))}
+  </>
+)
+
+export default Contact
