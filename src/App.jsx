@@ -70,10 +70,10 @@ const App = () => {
       }
       setNewName('')
       setNewPhone('')
+      return
     }
-    if (newName !== '' && newPhone !== '') {
-      createContact()
-    }
+
+    createContact()
   }
 
   const deleteContact = (e) => {
