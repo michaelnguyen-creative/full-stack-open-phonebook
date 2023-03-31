@@ -3,19 +3,19 @@ import Person from '../models/person.js'
 
 const personsRoute = express.Router()
 
-personsRoute.get('/api/persons', (_req, res) => {
+personsRoute.get('/', (_req, res) => {
   Person.find({}).then((result) => {
     res.json(result)
   })
 })
 
-personsRoute.get('/api/persons/:id', (req, res, next) => {
+personsRoute.get('/:id', (req, res, next) => {
   Person.findById(req.params.id)
     .then((result) => res.json(result))
     .catch((err) => next(err))
 })
 
-personsRoute.delete('/api/persons/:id', (req, res, next) => {
+personsRoute.delete('/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
     .then(() => res.status(204).end())
     .catch((err) => {
@@ -23,7 +23,7 @@ personsRoute.delete('/api/persons/:id', (req, res, next) => {
     })
 })
 
-personsRoute.post('/api/persons', (req, res, next) => {
+personsRoute.post('/', (req, res, next) => {
   const { body } = req
 
   if (body === undefined) {
@@ -43,7 +43,7 @@ personsRoute.post('/api/persons', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-personsRoute.put('/api/persons/:id', (req, res, next) => {
+personsRoute.put('/:id', (req, res, next) => {
   const { name, number } = req.body
 
   Person.findByIdAndUpdate(
