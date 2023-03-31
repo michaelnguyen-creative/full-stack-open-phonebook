@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Filter } from './components/Filter.jsx'
+import Filter from './components/Filter.jsx'
 import PersonForm from './components/PersonForm.jsx'
-import { Contact } from './components/Contact.jsx'
+import Contact from './components/Contact.jsx'
 import Notification from './components/Notification.jsx'
 import contactService from './services/contactService.js'
 
@@ -60,18 +60,20 @@ const App = () => {
     }
 
     if (checkExistedContact(newContact) !== undefined) {
-      // eslint-disable-next-line no-alert
-      if (window.confirm(
-        `${newName} is already added to phonebook. Would you like to replace the old one?`
-      )) {
+      if (
+        // eslint-disable-next-line no-alert
+        window.confirm(
+          `${newName} is already added to phonebook. Would you like to replace the old one?`
+        )
+      ) {
         updateContact()
       }
       setNewName('')
       setNewPhone('')
+      return
     }
-    if (newName !== '' && newPhone !== '') {
-      createContact()
-    }
+
+    createContact()
   }
 
   const deleteContact = (e) => {
