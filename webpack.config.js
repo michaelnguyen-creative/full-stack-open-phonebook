@@ -8,8 +8,8 @@ export default {
     new HtmlWebpackPlugin()
   ],
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(import.meta.url, 'dist')
+    filename: '[name].bundle.js',
+    path: path.resolve('dist')
   },
   module: {
     rules: [
@@ -20,7 +20,7 @@ export default {
     ]
   },
   devServer: {
-    static: './index.html',
+    static: './dist/index.html',
     compress: true,
     port: 3001
   }
