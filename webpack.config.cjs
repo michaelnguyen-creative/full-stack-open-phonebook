@@ -2,8 +2,8 @@ const path = require('path')
 // eslint-disable-next-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = (env, argv) => ({
-  name: 'client',
+module.exports = (env) => ({
+  name: 'client webpack config',
   target: 'web',
   output: {
     filename: '[name].bundle.js',
@@ -19,7 +19,7 @@ module.exports = (env, argv) => ({
     port: 3001,
   },
   plugins: [new HtmlWebpackPlugin({
-    template: './index.html'
+    template: './client/assets/index.html'
     // title: 'Phonebook App',
     // filename: 'assets/index.html'
   })],

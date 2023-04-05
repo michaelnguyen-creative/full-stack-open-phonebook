@@ -1,3 +1,5 @@
+import React from 'react'
+
 const PersonForm = ({
   addToPersons, addName, newName, addPhone, newPhone,
 }) => (
