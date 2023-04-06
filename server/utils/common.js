@@ -1,7 +1,7 @@
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 
 if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({ path: '../.env' })
+  dotenv.config()
 }
 
 const { PORT } = process.env

@@ -1,5 +1,4 @@
 const path = require('path')
-// eslint-disable-next-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = (env) => ({
@@ -20,8 +19,6 @@ module.exports = (env) => ({
   },
   plugins: [new HtmlWebpackPlugin({
     template: './client/assets/index.html'
-    // title: 'Phonebook App',
-    // filename: 'assets/index.html'
   })],
   optimization: {
     runtimeChunk: 'single',
@@ -38,7 +35,7 @@ module.exports = (env) => ({
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+            presets: ['@babel/preset-env'],
           },
         },
       },
