@@ -1,3 +1,5 @@
+import React from 'react'
+
 const Contact = ({ persons, deleteContact }) => (
   <>
     {persons.map((person) => (
