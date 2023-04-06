@@ -5,9 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "npx webpack serve",
+    "start": "NODE_ENV=development npx webpack serve",
     "build": "rm -rf dist && npx webpack",
-    "start-prod": "node index.js",
+    "start-prod": "NODE_ENV=production node index.js",
     "test": "eslint ."
   },
   "author": "Michael Nguyen",
