@@ -5,8 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development npx webpack serve",
-    "build": "rm -rf dist && npx webpack",
+    "start-server": "nodemon index.js",
+    "start-client": "npx webpack serve",
+    "build": "rm -rf dist && npx webpack --env production",
     "start-prod": "NODE_ENV=production node index.js",
     "test": "eslint ."
   },
@@ -32,9 +33,11 @@
     "@babel/preset-react": "^7.18.6",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
+    "cypress": "^12.9.0",
     "eslint": "^8.28.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-cypress": "^2.13.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.11",

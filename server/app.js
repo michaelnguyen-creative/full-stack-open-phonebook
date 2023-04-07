@@ -7,7 +7,10 @@ import middlewares from './utils/middlewares.js'
 
 const app = express()
 
-app.use(express.static('dist'))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('dist'))
+}
+
 app.use(express.json())
 app.use(cors())
 
