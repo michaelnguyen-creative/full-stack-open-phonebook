@@ -13,6 +13,10 @@ kill_timeout = 5
 [processes]
   app = "npm run start-prod"
 
+[build]
+  [build.args]
+    NODE_VERSION = "18.11.0"
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
