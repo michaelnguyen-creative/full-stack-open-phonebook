@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import app from './server/app.js'
-import config from './config/common.js'
+import config from './server/utils/config.js'
 
 const startServer = async () => {
   console.log('connecting to MongoDB at', config.MONGODB_URI)
