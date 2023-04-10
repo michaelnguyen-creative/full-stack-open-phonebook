@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './Filter.jsx'
 import PersonForm from './PersonForm.jsx'
 import Contact from './Contact.jsx'
@@ -13,9 +13,7 @@ const App = () => {
   const [status, setStatus] = useState('')
 
   useEffect(() => {
-    // console.log(contactService);
     contactService.getAll().then((initialContact) => {
-      // console.log(initialContact);
       setPersons(initialContact)
     })
   }, [])

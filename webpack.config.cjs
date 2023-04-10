@@ -11,7 +11,7 @@ module.exports = (env) => ({
   entry: './client/index.jsx',
   target: 'web',
   mode: env.production ? 'production' : 'development',
-  devtool: 'inline-source-map',
+  devtool: env.production ? 'source-map' : 'inline-source-map',
   devServer: {
     static: './dist',
     compress: true,
@@ -20,9 +20,6 @@ module.exports = (env) => ({
   plugins: [new HtmlWebpackPlugin({
     template: './client/assets/index.html'
   })],
-  optimization: {
-    runtimeChunk: 'single',
-  },
   module: {
     rules: [
       {
