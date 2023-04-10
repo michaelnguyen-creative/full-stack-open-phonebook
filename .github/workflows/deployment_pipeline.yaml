@@ -32,6 +32,7 @@ jobs:
           wait-on: http://localhost:3001
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to flyio
+        id: deploy_fly
         if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -46,6 +47,7 @@ jobs:
         with:
           fetch-depth: '0'
       - name: Bump version & push tag
+        id: release_tag
         uses: anothrNick/github-tag-action@1.61.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,10 +56,11 @@ jobs:
   
   discord_notify:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: [lint_test_deploy, release_tag]
     steps:
       - name: Deployment success
-        if: ${{ success() }}
+        if: ${{ steps.release_tag.conclusion == 'success' }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: info
