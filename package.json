@@ -11,7 +11,7 @@
     "build": "webpack --env production",
     "start-prod": "NODE_ENV=production node index.js",
     "lint": "eslint .",
-    "test:e2e": "npx cypress run"
+    "test:e2e": "cypress run"
   },
   "author": "Michael Nguyen",
   "license": "ISC",
