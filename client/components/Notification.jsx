@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Notification = ({ status }) => {
   if (status === '') {
     return null
