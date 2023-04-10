@@ -53,18 +53,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           WITH_V: true
+          INITIAL_VERSION: '2.0.0'
   
   discord_notify:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     needs: [lint_test_deploy, release_tag]
     steps:
       - name: Deployment success
-        if: ${{ steps.release_tag.conclusion == 'success' }}
+        if: ${{ success() }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: info
           username: Michael Nguyen
+          description: New Phonebook app is available at https://damp-morning-4577.fly.dev/
+          text: Deployed a new version of phonebook app
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure
         if: ${{ failure() }}
@@ -72,6 +74,7 @@ jobs:
         with:
           severity: error
           username: Michael Nguyen
+          text: Oops! Some jobs failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
 
