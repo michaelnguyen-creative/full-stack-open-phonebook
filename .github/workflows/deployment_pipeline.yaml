@@ -54,7 +54,7 @@ jobs:
   
   discord_notify:
     runs-on: ubuntu-latest
-    needs: [release_tag]
+    needs: [lint_test_deploy, release_tag]
     steps:
       - name: Deployment success
         if: ${{ success() }}
