@@ -74,7 +74,7 @@ jobs:
         with:
           severity: error
           username: Michael Nguyen
-          text: Oops! Some jobs failed
+          text: Oops! Some jobs have failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
 
