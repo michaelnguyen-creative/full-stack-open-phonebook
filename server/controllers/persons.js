@@ -1,5 +1,5 @@
-import express from 'express'
-import Person from '../models/person.js'
+const express = require('express')
+const Person = require('../models/person.js')
 
 const personsRoute = express.Router()
 
@@ -55,4 +55,4 @@ personsRoute.put('/:id', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-export default personsRoute
+module.exports = personsRoute

@@ -1,35 +1,40 @@
-# fly.toml file generated for damp-morning-4577 on 2022-11-14T11:42:55+07:00
+# fly.toml app configuration file generated for fso-phonebook-fullstack on 2023-05-16T11:35:49+07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "damp-morning-4577"
+app = "fso-phonebook-fullstack"
 kill_signal = "SIGINT"
 kill_timeout = 5
+primary_region = "sin"
+
+[build]
 
 [env]
   PORT = "8080"
 
-[deploy]
-  release_command = "npm run build"
-
-[processes]
-  app = "npm run start-prod"
-
-[build]
-  [build.args]
-    NODE_VERSION = "18.11.0"
-
 [experimental]
-  allowed_public_ports = []
   auto_rollback = true
 
 [[services]]
   internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
-  script_checks = []
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
     type = "connections"
+
+  [[services.http_checks]]
+    grace_period = "5s"
+    interval = 10000
+    method = "get"
+    path = "/"
+    protocol = "http"
+    restart_limit = 0
+    timeout = 2000
+    tls_skip_verify = false
+    [services.http_checks.headers]
 
   [[services.ports]]
     force_https = true
@@ -45,15 +50,3 @@ kill_timeout = 5
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
-  
-  [[services.http_checks]]
-    interval = 10000
-    grace_period = "5s"
-    method = "get"
-    path = "/"
-    protocol = "http"
-    restart_limit = 0
-    timeout = 2000
-    tls_skip_verify = false
-    [services.http_checks.headers]
-    

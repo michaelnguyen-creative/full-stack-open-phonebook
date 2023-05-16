@@ -15,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
   return next(err)
 }
 
-export default {
+module.exports = {
   unknownEndpoint,
   errorHandler
 }

@@ -1,5 +1,5 @@
-import express from 'express'
-import Person from '../models/person.js'
+const express =  require('express')
+const Person = require('../models/person.js')
 
 const infoRoute = express.Router()
 
@@ -15,4 +15,4 @@ infoRoute.get('/api/info', (req, res) => {
   })
 })
 
-export default infoRoute
+module.exports = infoRoute

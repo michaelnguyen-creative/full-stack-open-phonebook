@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const personSchema = new mongoose.Schema({
   name: {
@@ -23,4 +23,4 @@ personSchema.set('toJSON', {
   },
 })
 
-export default mongoose.model('Person', personSchema)
+module.exports = mongoose.model('Person', personSchema)

@@ -1,9 +1,9 @@
-import express from 'express'
-import morgan from 'morgan'
-import cors from 'cors'
-import personsRoute from './controllers/persons.js'
-import infoRoute from './controllers/info.js'
-import middlewares from './utils/middlewares.js'
+const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+const personsRoute = require('./controllers/persons.js')
+const infoRoute = require('./controllers/info.js')
+const middlewares = require('./utils/middlewares.js')
 
 const app = express()
 
@@ -25,4 +25,4 @@ app.use('/api/persons', personsRoute)
 app.use(middlewares.unknownEndpoint)
 app.use(middlewares.errorHandler)
 
-export default app
+module.exports = app
