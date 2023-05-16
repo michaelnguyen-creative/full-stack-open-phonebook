@@ -1,36 +1,25 @@
-FROM debian:bullseye as builder
+FROM node:18-alpine AS base
+WORKDIR /usr/src/app
+COPY package*.json .
 
-ARG NODE_VERSION=18.11.0
+# FROM base AS test
+# RUN npm i
+# COPY . .
+# RUN npm run test:e2e
 
-RUN apt-get update; apt install -y curl
-RUN curl https://get.volta.sh | bash
-ENV VOLTA_HOME /root/.volta
-ENV PATH /root/.volta/bin:$PATH
-RUN volta install node@${NODE_VERSION}
+FROM base AS frontend-build
+# COPY --from=test . .
+RUN npm i
+COPY webpack* babel* .
+COPY ./client ./client
+RUN npm run build
 
-#######################################################################
+FROM frontend-build AS start
+RUN npm ci --only=production
+COPY --from=frontend-build /usr/src/app/dist .
+COPY ./server ./server
+COPY --chown=node index.js .
 
-RUN mkdir /app
-WORKDIR /app
-
-# NPM will not install any package listed in "devDependencies" when NODE_ENV is set to "production",
-# to install all modules: "npm install --production=false".
-# Ref: https://docs.npmjs.com/cli/v9/commands/npm-install#description
-
-ENV NODE_ENV production
-
-COPY . .
-
-RUN npm install --production=false
-FROM debian:bullseye
-
-LABEL fly_launch_runtime="nodejs"
-
-COPY --from=builder /root/.volta /root/.volta
-COPY --from=builder /app /app
-
-WORKDIR /app
-ENV NODE_ENV production
-ENV PATH /root/.volta/bin:$PATH
-
-CMD [ "npm", "run", "start" ]
+ENV NODE_ENV=production
+USER node
+CMD ["npm", "run", "start-prod"]
