@@ -31,9 +31,9 @@ jobs:
           DEBUG: '@cypress/github-action'
           NODE_ENV: 'production'
         with:
-          command: npm run test:e2e
+          build: npm i -D cypress
           start: npm run start-prod
-          wait-on: http://127.0.0.1:8080
+          wait-on: 'npx wait-on --timeout 60000 http://localhost:8080'
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to flyio
         id: deploy_fly
