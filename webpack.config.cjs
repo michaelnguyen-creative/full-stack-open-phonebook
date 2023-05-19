@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = (env) => ({
   name: 'client webpack config',
@@ -17,9 +18,12 @@ module.exports = (env) => ({
     compress: true,
     port: 3003,
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: './client/assets/index.html'
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './client/assets/index.html',
+    }),
+    new webpack.EnvironmentPlugin(['REACT_APP_BACKEND_URL']),
+  ],
   module: {
     rules: [
       {
