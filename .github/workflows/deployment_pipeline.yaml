@@ -21,15 +21,18 @@ jobs:
       - name: Lint code
         run: npm run lint
       - name: Build
+        env:
+          REACT_APP_BACKEND_URL: http://localhost:8080
         run: npm run build
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          DEBUG: '@cypress/github-action'
+          NODE_ENV: 'production'
         with:
-          command: npm run test:e2e
           start: npm run start-prod
-          wait-on: http://localhost:3001
+          wait-on: 'npx wait-on --timeout 60000 http://localhost:8080'
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to flyio
         id: deploy_fly

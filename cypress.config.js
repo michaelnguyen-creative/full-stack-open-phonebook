@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { defineConfig } from 'cypress'
+const { defineConfig } = require('cypress')
 
-export default defineConfig({
+module.exports = defineConfig({
   e2e: {
     // eslint-disable-next-line no-unused-vars
     setupNodeEvents(on, config) {
