@@ -1,19 +1,20 @@
 import axios from 'axios'
 
-const baseUrl = '/api/persons'
+const baseURL = process.env.REACT_APP_BACKEND_URL || '/api/persons'
+const api = axios.create({ baseURL })
 
-const getAll = () => axios.get(baseUrl).then((response) => response.data)
+const getAll = () => api.get('/api/persons').then((response) => response.data)
 
 const create = (newObject) =>
-  axios.post(baseUrl, newObject).then((response) => response.data)
+  api.post('/api/persons', newObject).then((response) => response.data)
 
 const remove = (id) =>
-  axios
-    .delete(`${baseUrl}/${id}`)
+  api
+    .delete(`/api/persons/${id}`)
     .then(() => console.log(`deleted contact ${id}`))
 
 const update = (id, newObject) =>
-  axios.put(`${baseUrl}/${id}`, newObject).then((response) => response.data)
+  axios.put(`/api/persons/${id}`, newObject).then((response) => response.data)
 
 export default {
   getAll,
