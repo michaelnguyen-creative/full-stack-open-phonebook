@@ -33,7 +33,7 @@ jobs:
         with:
           command: npm run test:e2e
           start: npm run start-prod
-          wait-on: http://localhost:8080
+          wait-on: http://127.0.0.1:8080
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to flyio
         id: deploy_fly
