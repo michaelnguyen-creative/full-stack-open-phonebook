@@ -19,7 +19,7 @@ app.use(
   morgan(':method :url :status :res[content-length] :response-time ms :persons')
 )
 
-app.use('/', infoRoute)
+app.use('/api/info', infoRoute)
 app.use('/api/persons', personsRoute)
 
 app.use(middlewares.unknownEndpoint)

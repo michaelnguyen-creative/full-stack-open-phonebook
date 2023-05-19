@@ -7,7 +7,7 @@ infoRoute.get('/health', (req, res) => {
   res.status(200).send('Ok')
 })
 
-infoRoute.get('/api/info', (req, res) => {
+infoRoute.get('/', (req, res) => {
   Person.find({}).then((result) => {
     const count = result.length
     const time = new Date()
