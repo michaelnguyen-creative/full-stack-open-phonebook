@@ -31,7 +31,6 @@ jobs:
           DEBUG: '@cypress/github-action'
           NODE_ENV: 'production'
         with:
-          build: npm i -D cypress
           start: npm run start-prod
           wait-on: 'npx wait-on --timeout 60000 http://localhost:8080'
       - uses: superfly/flyctl-actions/setup-flyctl@master
