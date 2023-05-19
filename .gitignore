@@ -5,3 +5,7 @@ node_modules
 
 dist/
 build/
+
+cypress/screenshots/*
+cypress/support/*
+cypress/videos/*
