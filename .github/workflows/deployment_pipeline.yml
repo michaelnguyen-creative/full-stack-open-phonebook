@@ -24,8 +24,8 @@ jobs:
       - name: Lint code
         run: npm run lint
       - name: Build
-        env:
-          REACT_APP_BACKEND_URL: http://localhost:8080
+        # env:
+        #   REACT_APP_BACKEND_URL: http://localhost:8080
         run: npm run build
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
