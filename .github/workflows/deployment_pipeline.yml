@@ -61,12 +61,12 @@ jobs:
     needs: ['publish-docker-image']
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
     steps:
+      - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to flyio
-        id: deploy_fly
+        run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: flyctl deploy --remote-only
         
   release-tag:
     runs-on: ubuntu-20.04
@@ -88,10 +88,10 @@ jobs:
   discord-notify:
     runs-on: ubuntu-20.04
     needs: ['test-build', 'deploy-app', 'publish-docker-image', 'release-tag']
-    if: ${{ always() }}
+    if: ${{ github.event_name == 'push' && always() }}
     steps:
       - name: Deployment success
-        if: ${{ github.event_name == 'push' && success() }}
+        if: ${{ !contains(join(needs.*.result, ','), 'failure') }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: info
@@ -100,7 +100,7 @@ jobs:
           text: Deployed a new version of phonebook app
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure
-        if: ${{ github.event_name == 'push' && failure() }}
+        if: ${{ contains(join(needs.*.result, ','), 'failure') }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: error
