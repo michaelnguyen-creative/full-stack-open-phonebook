@@ -7,7 +7,7 @@ FROM base AS frontend-build
 RUN npm i
 COPY webpack* babel* ./
 COPY ./client ./client
-ENV REACT_APP_BACKEND_URL=http://localhost:8080
+# ENV REACT_APP_BACKEND_URL=http://localhost:8080
 RUN npm run build
 
 FROM base AS start
