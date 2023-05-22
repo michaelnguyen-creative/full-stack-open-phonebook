@@ -22,7 +22,9 @@ module.exports = (env) => ({
     new HtmlWebpackPlugin({
       template: './client/assets/index.html',
     }),
-    new webpack.EnvironmentPlugin(['REACT_APP_BACKEND_URL']),
+    new webpack.EnvironmentPlugin({
+      REACT_APP_BACKEND_URL: null
+    }),
   ],
   module: {
     rules: [
