@@ -53,56 +53,57 @@ jobs:
         with:
           push: true
           tags: michaelnguyencreative/fso-phonebook-fullstack:latest
-  # deploy-app:
-  #   runs-on: ubuntu-20.04
-  #   needs: ['test-build']
-  #   steps:
-  #     - uses: superfly/flyctl-actions/setup-flyctl@master
-  #     - name: Deploy to flyio
-  #       id: deploy_fly
-  #       if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
-  #       env:
-  #         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  #       run: flyctl deploy --remote-only
-        
-  # release-tag:
-  #   runs-on: ubuntu-20.04
-  #   needs: ['deploy-app']
-  #   if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: '0'
-  #     - name: Bump version & push tag
-  #       id: release_tag
-  #       uses: anothrNick/github-tag-action@1.61.0
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         DEFAULT_BUMP: patch
-  #         WITH_V: true
-  #         INITIAL_VERSION: '2.0.0'
   
-  # discord-notify:
-  #   runs-on: ubuntu-20.04
-  #   needs: [test-build, deploy-app, release-tag]
-  #   steps:
-  #     - name: Deployment success
-  #       if: ${{ success() }}
-  #       uses: rjstone/discord-webhook-notify@v1.0.4
-  #       with:
-  #         severity: info
-  #         username: Michael Nguyen
-  #         description: New Phonebook app is available at https://damp-morning-4577.fly.dev/
-  #         text: Deployed a new version of phonebook app
-  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-  #     - name: Deployment failure
-  #       if: ${{ failure() }}
-  #       uses: rjstone/discord-webhook-notify@v1.0.4
-  #       with:
-  #         severity: error
-  #         username: Michael Nguyen
-  #         text: Oops! Some jobs have failed
-  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  deploy-app:
+    runs-on: ubuntu-20.04
+    needs: ['publish-docker-image']
+    steps:
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy to flyio
+        id: deploy_fly
+        if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: flyctl deploy --remote-only
+        
+  release-tag:
+    runs-on: ubuntu-20.04
+    needs: ['deploy-app']
+    if: ${{ github.event_name == 'push' && !contains(toJson(github.event), '#skip') }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Bump version & push tag
+        id: release_tag
+        uses: anothrNick/github-tag-action@1.61.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
+          INITIAL_VERSION: '2.0.0'
+  
+  discord-notify:
+    runs-on: ubuntu-20.04
+    needs: ['test-build', 'deploy-app', 'publish-docker-image', 'release-tag']
+    steps:
+      - name: Deployment success
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: info
+          username: Michael Nguyen
+          description: New Phonebook app is available at https://fso-phonebook-fullstack.fly.dev/
+          text: Deployed a new version of phonebook app
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Deployment failure
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: error
+          username: Michael Nguyen
+          text: Oops! Some jobs have failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
 
     
