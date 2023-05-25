@@ -1,18 +1,19 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const path = require('node:path')
 const personsRoute = require('./controllers/persons.js')
 const infoRoute = require('./controllers/info.js')
 const middlewares = require('./utils/middlewares.js')
 
 const app = express()
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('dist'))
-}
-
 app.use(express.json())
 app.use(cors())
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', 'dist')))
+}
 
 morgan.token('persons', (req) => JSON.stringify(req.body))
 app.use(
