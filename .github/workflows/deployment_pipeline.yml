@@ -18,7 +18,7 @@ jobs:
           node-version: 18.11.0
       # Split cypress install & tests
       - name: Install dependencies
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           runTests: false
       - name: Lint code
@@ -28,7 +28,7 @@ jobs:
         #   REACT_APP_BACKEND_URL: http://localhost:8080
         run: npm run build
       - name: Run E2E tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           DEBUG: '@cypress/github-action'
